@@ -1,0 +1,28 @@
+# Terraform state files
+# 状態ファイルとバックアップファイル
+*.tfstate
+*.tfstate.*
+
+# Crash log files
+# 実行中にクラッシュした際に生成されるログ
+crash.log
+
+# Terraform plan files
+# terraform planで作成される計画ファイル
+*.tfplan
+
+# Provider plugins
+# プロバイダーやモジュールのキャッシュディレクトリ
+.terraform/
+
+# Override files
+# Terraformのオーバーライド設定用ファイル
+override.tf
+override.tf.json
+*_override.tf
+*_override.tf.json
+
+# CLI config files
+# Terraform CLIの設定ファイル
+.terraformrc
+terraform.rc
