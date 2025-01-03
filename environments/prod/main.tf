@@ -5,4 +5,5 @@ module "ec2_instance" {
   region = var.region
   environment   = "prod"
   security_group_id = var.security_group_id
+  key_name      = var.key_name
 }

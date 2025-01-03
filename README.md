@@ -44,10 +44,12 @@ cd ec2-ansible-controller-setup/environments/prod/
 terraform init
 ```
 
+$key_nameは自身のAWS環境で利用しているキーペア名
+
 ```
-terraform plan -var-file=terraform.tfvars
+terraform plan -var-file=terraform.tfvars -var="key_name=$key_name"
 ```
 
 ```
-terraform apply -var-file=terraform.tfvars
+terraform apply -var-file=terraform.tfvars -var="key_name=$key_name"
 ```
