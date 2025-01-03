@@ -68,7 +68,9 @@ $key_nameは自身のAWS環境で利用しているキーペア名
     terraform apply -var-file=terraform.tfvars -var="key_name=$key_name"
     ```
 
-# Terraformインストール
+# Appendix
+
+## Terraformインストール手順
 
 Cloud Shell上で実行する想定での手順。  
 Terraformのインストールは実行環境毎に適宜変更。
@@ -93,7 +95,3 @@ Terraformのインストールは実行環境毎に適宜変更。
     ```
     terraform -v
     ```
-3. 当該リポジトリをclone
-   ```
-   git clone https://github.com/rato303/ec2-ansible-controller-setup.git
-   ```
