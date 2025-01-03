@@ -1,13 +1,77 @@
 # 概要
 
-構築されたAnsibleコントローラーをEC2インスタンスで構築するためのTerraformファイル管理用リポジトリ
+Ansibleのマネージドノード用EC2インスタンスを構築するTerraformファイル管理用リポジトリ。  
 
-# 使い方
+![イメージ](./images/イメージ.svg)
 
-1. 当該リポジトリをCloud Shell内でclone
-    - `git clone https://github.com/rato303/ec2-ansible-controller-setup.git`
+## 環境差分
 
-## 事前準備(CloudShell作成時に1度のみ)
+devのみEC2インスタンスに直接ansibleがインストールされる。  
+playbookを実行するだけの場合はprod環境の利用を推奨する。  
+
+### dev
+
+- dockerがインストールされる
+- ansibleがインストールされる
+- ansible実行用のコンテナがインストールされる
+
+### prod
+
+- dockerがインストールされる
+
+# ディレクトリ構成
+
+```
+ec2-ansible-controller-setup/
+├── environments/ 環境ごとの設定ファイルを格納するディレクトリ
+│   ├── dev/ 開発環境用のTerraform設定ファイルを含むディレクトリ
+│   │   ├── backend.tf
+│   │   ├── main.tf
+│   │   ├── terraform.tfvars
+│   │   └── variables.tf
+│   └── prod/ 本番環境用のTerraform設定ファイルを含むディレクトリ
+│       ├── backend.tf
+│       ├── main.tf
+│       ├── terraform.tfvars
+│       └── variables.tf
+├── images/ README添付用の画像格納ディレクトリ
+│   ├── イメージ.drawio.svg
+│   └── イメージ.svg
+└── modules/  再利用可能なTerraformモジュールを格納するディレクトリ
+    └── ec2_instance/
+        ├── main.tf
+        ├── outputs.tf
+        └── variables.tf
+```
+
+# 実行方法
+
+$key_nameは自身のAWS環境で利用しているキーペア名  
+
+1. カレントディレクトリを作成したい環境のディレクトリに変更
+    ```
+    cd ec2-ansible-controller-setup/environments/prod/
+    ```
+
+2. プロバイダー・モジュールの依存解決
+    ```
+    terraform init
+    ```
+
+3. planを確認
+    ```
+    terraform plan -var-file=terraform.tfvars -var="key_name=$key_name"
+    ```
+
+4. planを適用
+    ```
+    terraform apply -var-file=terraform.tfvars -var="key_name=$key_name"
+    ```
+
+# Terraformインストール
+
+Cloud Shell上で実行する想定での手順。  
+Terraformのインストールは実行環境毎に適宜変更。
 
 1. Terraformのダウンロード・解凍
     ```
@@ -33,23 +97,3 @@
    ```
    git clone https://github.com/rato303/ec2-ansible-controller-setup.git
    ```
-
-## 実行方法(利用環境を例)
-
-```
-cd ec2-ansible-controller-setup/environments/prod/
-```
-
-```
-terraform init
-```
-
-$key_nameは自身のAWS環境で利用しているキーペア名
-
-```
-terraform plan -var-file=terraform.tfvars -var="key_name=$key_name"
-```
-
-```
-terraform apply -var-file=terraform.tfvars -var="key_name=$key_name"
-```
