@@ -18,6 +18,8 @@ resource "aws_instance" "example" {
 
     sudo apt update -y
     sudo apt install -y docker.io
+    sudo usermod -aG docker ubuntu # `ubuntu`ユーザーを docker グループに追加する
+    su - ubuntu -c "newgrp docker"  # ubuntu ユーザーのセッションを再読み込み
     if [ "$ENVIRONMENT" = "dev" ]; then
       sudo apt install -y ansible
     fi
